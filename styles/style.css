@@ -93,6 +93,10 @@ thead th:nth-child(1) {
       margin: auto;
   }
 
+.read:hover, .removeButton:hover {
+    cursor: pointer;
+}
+
 #empty-library {
     display: flex;
     padding: 2rem;

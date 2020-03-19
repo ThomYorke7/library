@@ -238,13 +238,13 @@ table.addEventListener("click", (e) => {
         switch (e.target.textContent) {
             case "Yes":
                 e.target.textContent = "No";
-                index = e.target.nextSibling.getAttribute("data-id");
+                index = e.target.nextSibling.firstChild.getAttribute("data-id");
                 myLibrary[index - 1].read = e.target.textContent;
                 stats();
                 break;
             case "No":
                 e.target.textContent = "Yes";
-                index = e.target.nextSibling.getAttribute("data-id");
+                index = e.target.nextSibling.firstChild.getAttribute("data-id");
                 myLibrary[index - 1].read = e.target.textContent;
                 stats();
                 break;
