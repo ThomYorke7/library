@@ -34,6 +34,8 @@ h1 {
 
 #book-form input{
     padding: 0.3rem;
+    border-radius: 3%;
+    border: none;
 }
 
 #book-form > * {
@@ -101,7 +103,7 @@ tr:nth-child(odd) {
   }
 
 tr:nth-child(even) {
-    background-color: #c9f0ff;
+    background-color: #c2efeb;
   }
 
 th:hover {
