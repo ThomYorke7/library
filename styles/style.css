@@ -4,9 +4,10 @@
     font-size: 18px;
 }
 
-html {
+html, body {
     background-color: #fff9fb;
     font-family: 'Libre Baskerville', serif;
+    width: 100vw;
 }
 
 h1 {
@@ -62,7 +63,6 @@ thead th:nth-child(1) {
 
   #table-header > *{
       background-color: #81c4ae;
-      font-size: 1.2rem;
   }
 
   tr:nth-child(odd) {
