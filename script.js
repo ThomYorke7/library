@@ -1,9 +1,12 @@
+// Global Variables
 let myLibrary = [];
 let bookID = 0;
 let table = document.getElementById("library-table")
 const addBookButton = document.getElementById("add-book-button")
 const bookForm = document.getElementById("book-form")
 
+
+// Book Constructor
 class book {
     constructor(title, author, pages, read) {
         this.title = title;
@@ -14,14 +17,13 @@ class book {
     }
 }
 
+
+// Add Books to "Library" Array and Table
 function addBookToLibrary(...bookArgs) {
     newBook = new book(...bookArgs);
     myLibrary.push(newBook)
     bookID += 1
 }
-
-// addBookToLibrary("Lord of the Rings", "JRR Tolkien", 850, "Yes");
-// addBookToLibrary("Macbeth", "William Shakespeare", 450, "No");
 
 function addBooktoTable(book) {
     let newRow = document.createElement("tr");
@@ -45,13 +47,18 @@ function addRemoveButton() {
     return buttonContainer;
 }
 
+
+// This should render pre-existing libraries
 function render() {
     myLibrary.forEach(e => {
         addBooktoTable(e)
     })
 }
 
+render();
 
+
+// Removes the "Empty Library" message when adding a book
 function removeEmptyMessage() {
     if (myLibrary.length > 0) {
         document.getElementById("empty-library").style.display = "none";
@@ -61,6 +68,7 @@ function removeEmptyMessage() {
 }
 
 
+// The following functions are related to the Statistics section of the website
 function statsTotal() {
     document.getElementById("total-books").lastChild.textContent = myLibrary.length;
 }
@@ -170,6 +178,8 @@ function stats() {
     statsPreferredAuthor();
 }
 
+
+// This function sorts elements alphabetically when clicking the table headers
 function sortTable(n) {
     let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("library-table");
@@ -208,6 +218,7 @@ function sortTable(n) {
 }
 
 
+// Event Listeners
 bookForm.addEventListener("submit", (e) => {
     e.preventDefault();
     let title = document.getElementById("book-title").value
@@ -251,7 +262,3 @@ table.addEventListener("click", (e) => {
         }
     }
 })
-
-
-
-render()

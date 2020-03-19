@@ -1,3 +1,4 @@
+/* Global Settings */
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
 
 :root {
@@ -17,16 +18,39 @@ h1 {
     padding-top: 2rem;
 }
 
+
+/* Form Settings */
 #form-container {
     display: flex;
     justify-content: center;
-    padding: 0 2rem 0 2rem;
+    padding: 0 1rem 0 1rem;
+    width: 100vw;
+    box-sizing: border-box;
+}
+
+#book-form {
+    text-align: center;
 }
 
 #book-form > * {
     padding-right: 2rem;
 }
 
+#book-pages {
+    width: 5%;
+}
+
+#book-form button{
+    background-color: #81c4ae;
+    padding: 0.4em;
+    border-radius: 5%;
+    border: none;
+    cursor: pointer;
+}
+
+
+
+/* Book Table */
 #books-container {
     overflow-x: auto;
 }
@@ -44,47 +68,47 @@ thead th:nth-child(1) {
     width: 40%;
   }
   
-  thead th:nth-child(2) {
+thead th:nth-child(2) {
     width: 30%;
   }
   
-  thead th:nth-child(3) {
+thead th:nth-child(3) {
     width: 10%;
   }
   
-  thead th:nth-child(4) {
+thead th:nth-child(4) {
     width: 10%;
   }
 
-  thead th:nth-child(5) {
+thead th:nth-child(5) {
     width: 10%;
   }
 
-  th, td {
+th, td {
     padding: 20px;
   }
 
-  #table-header > *{
+#table-header > *{
       background-color: #81c4ae;
   }
 
-  tr:nth-child(odd) {
+tr:nth-child(odd) {
     background-color: #eafffd;
   }
 
-  tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #c9f0ff;
   }
 
-  th:hover {
+th:hover {
       cursor: pointer;
   }
 
-  .pages, .read {
+.pages, .read {
       text-align: center;
   }
 
- .removeButton {
+.removeButton {
       background-image: url(../images/removeicon.png);
       background-size: contain;
       background-position: center;
@@ -100,6 +124,8 @@ thead th:nth-child(1) {
     cursor: pointer;
 }
 
+
+/* Empty Library Message */
 #empty-library {
     display: flex;
     margin-top: 2rem;
@@ -109,6 +135,8 @@ thead th:nth-child(1) {
     box-sizing: border-box;
 }
   
+
+/* Statistics Container Settings */
 #stats-container {
     background-image: url(../images/paper.png);
 }
@@ -139,16 +167,19 @@ thead th:nth-child(1) {
     text-align: center;
 }
 
-@media (max-width: 1550px) {
-    html {
-        font-size: 0.4rem;
-    }
+
+/* Media Queries */
+@media (max-width: 1283px) {
 
     #book-form > *{
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-right: 0;
+    }
+
+    #book-pages {
+        width: 30%;
     }
 
     #book-form input {
