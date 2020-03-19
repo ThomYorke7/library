@@ -32,6 +32,10 @@ h1 {
     text-align: center;
 }
 
+#book-form input{
+    padding: 0.3rem;
+}
+
 #book-form > * {
     padding-right: 2rem;
 }
