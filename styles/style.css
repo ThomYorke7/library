@@ -6,32 +6,35 @@
 
 html, body {
     background-color: #fff9fb;
+    background-image: url(../images/paper.png);
     font-family: 'Libre Baskerville', serif;
     width: 100vw;
 }
 
 h1 {
-    margin-left: 2rem;
     text-align: center;
+    margin-bottom: 5rem;
+    padding-top: 2rem;
 }
 
 #form-container {
     display: flex;
     justify-content: center;
-    margin: 2rem;
+    padding: 0 2rem 0 2rem;
 }
 
 #book-form > * {
     padding-right: 2rem;
 }
 
+#books-container {
+    overflow-x: auto;
+}
+
 #library-table {
     table-layout: fixed;
-    width: 100%;
+    min-width: 100vw;
     border-collapse: collapse;
-    /*border: 3px solid #c9c5cb;
-    /*margin-left: 1%;*/
-    box-sizing: border-box;
     margin-top: 3rem;
     margin-bottom: 4rem;
     box-shadow: 0 0 5px #c9c5cb;
@@ -99,12 +102,16 @@ thead th:nth-child(1) {
 
 #empty-library {
     display: flex;
-    padding: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     width: 100%;
     justify-content: center;
     box-sizing: border-box;
 }
   
+#stats-container {
+    background-image: url(../images/paper.png);
+}
 
 #stats {
     display: grid;
@@ -113,12 +120,12 @@ thead th:nth-child(1) {
     grid-template-areas: 
     "title title";
     width: 100%;
-    padding: 2rem 20% 2rem 20%;
+    padding: 1rem 20vw 1rem 20vw;
     box-sizing: border-box;
     justify-items: center;
     justify-content: center;
     align-items: center;
-    background-color: #252627;
+    background-color: rgba(25, 26, 27, 0.9);
     color: snow;
     row-gap: 1rem;
 }
@@ -132,3 +139,24 @@ thead th:nth-child(1) {
     text-align: center;
 }
 
+@media (max-width: 1550px) {
+    html {
+        font-size: 0.4rem;
+    }
+
+    #book-form > *{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-right: 0;
+    }
+
+    #book-form input {
+        margin-bottom: 0.5rem;
+        margin-top: 0.3rem;
+    }
+
+    #stats {
+        padding: 1rem 5vw 1rem 5vw;
+    }
+}
