@@ -39,8 +39,10 @@ function addBooktoTable(book) {
 function addRemoveButton() {
     let removeButton = document.createElement("button");
     removeButton.setAttribute("data-id", bookID);
-    //removeButton.style.cssText = "background-image: url(../images/removeicon.png)";
-    return removeButton;
+    removeButton.setAttribute("class", "removeButton");
+    let buttonContainer = document.createElement("td");
+    buttonContainer.appendChild(removeButton)
+    return buttonContainer;
 }
 
 function render() {
@@ -54,7 +56,7 @@ function removeEmptyMessage() {
     if (myLibrary.length > 0) {
         document.getElementById("empty-library").style.display = "none";
     } else {
-        document.getElementById("empty-library").style.display = "block";
+        document.getElementById("empty-library").style.display = "flex";
     }
 }
 
@@ -108,7 +110,7 @@ function statsLongest() {
         })
         document.getElementById("longest-book").lastChild.textContent = myLibrary[0].title
     } else {
-        document.getElementById("longest-book").lastChild.textContent = ""
+        document.getElementById("longest-book").lastChild.textContent = "There are no books in your library"
     }
 }
 
@@ -123,7 +125,7 @@ function statsShortest() {
         })
         document.getElementById("shortest-book").lastChild.textContent = myLibrary[0].title
     } else {
-        document.getElementById("shortest-book").lastChild.textContent = ""
+        document.getElementById("shortest-book").lastChild.textContent = "There are no books in your library"
     }
 }
 
@@ -153,7 +155,7 @@ function statsPreferredAuthor() {
         let mostFrequent = Object.keys(counts).filter(k => counts[k] === maxCount);
         document.getElementById("preferred-author").lastChild.textContent = mostFrequent
     } else {
-        document.getElementById("preferred-author").lastChild.textContent = ""
+        document.getElementById("preferred-author").lastChild.textContent = "There are no books in your library"
     }
 }
 
@@ -167,6 +169,44 @@ function stats() {
     statsTotalAuthors();
     statsPreferredAuthor();
 }
+
+function sortTable(n) {
+    let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("library-table");
+    switching = true;
+    dir = "asc";
+    while (switching) {
+        switching = false;
+        rows = table.rows;
+        for (i = 1; i < (rows.length - 1); i++) {
+            shouldSwitch = false;
+            x = rows[i].getElementsByTagName("td")[n];
+            y = rows[i + 1].getElementsByTagName("td")[n];
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            switchcount++;
+        } else {
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+
 
 bookForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -187,7 +227,7 @@ table.addEventListener("click", (e) => {
     if (e.target.hasAttribute("data-id")) {
         let index = e.target.getAttribute("data-id");
         myLibrary.splice(index - 1, 1);
-        e.target.parentNode.remove();
+        e.target.parentNode.parentNode.remove();
         removeEmptyMessage();
         stats();
     }

@@ -1,12 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
+
 :root {
     font-size: 18px;
+}
+
+html {
+    background-color: #fff9fb;
+    font-family: 'Libre Baskerville', serif;
+}
+
+h1 {
+    margin-left: 2rem;
+    text-align: center;
+}
+
+#form-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+
+#book-form > * {
+    padding-right: 2rem;
 }
 
 #library-table {
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    border: 3px solid gray;
+    /*border: 3px solid #c9c5cb;
+    /*margin-left: 1%;*/
+    box-sizing: border-box;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    box-shadow: 0 0 5px #c9c5cb;
 }
 
 thead th:nth-child(1) {
@@ -32,3 +59,72 @@ thead th:nth-child(1) {
   th, td {
     padding: 20px;
   }
+
+  #table-header > *{
+      background-color: #81c4ae;
+      font-size: 1.2rem;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #eafffd;
+  }
+
+  tr:nth-child(even) {
+    background-color: #c9f0ff;
+  }
+
+  th:hover {
+      cursor: pointer;
+  }
+
+  .pages, .read {
+      text-align: center;
+  }
+
+ .removeButton {
+      background-image: url(../images/removeicon.png);
+      background-size: contain;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 30px;
+      height: 30px;
+      display: block;
+      margin: auto;
+  }
+
+#empty-library {
+    display: flex;
+    padding: 2rem;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+}
+  
+
+#stats {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(9, auto);
+    grid-template-areas: 
+    "title title";
+    width: 100%;
+    padding: 2rem 20% 2rem 20%;
+    box-sizing: border-box;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #252627;
+    color: snow;
+    row-gap: 1rem;
+}
+
+#h1-container {
+    grid-area: title;
+}
+
+#stats >* {
+    justify-self: center;
+    text-align: center;
+}
+
