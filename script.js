@@ -2,7 +2,6 @@
 let myLibrary = [];
 let bookID = 0;
 let table = document.getElementById("library-table")
-const addBookButton = document.getElementById("add-book-button")
 const bookForm = document.getElementById("book-form")
 
 
@@ -109,14 +108,15 @@ function statsPagesAverage() {
 
 function statsLongest() {
     if (myLibrary.length > 0) {
-        myLibrary.sort(function (a, b) {
+        sorted = JSON.parse(JSON.stringify(myLibrary))
+        sorted.sort(function (a, b) {
             if (parseInt(a.pages) > parseInt(b.pages)) {
                 return -1;
             } else {
                 return 1
             }
         })
-        document.getElementById("longest-book").lastChild.textContent = myLibrary[0].title
+        document.getElementById("longest-book").lastChild.textContent = sorted[0].title
     } else {
         document.getElementById("longest-book").lastChild.textContent = "There are no books in your library"
     }
@@ -124,14 +124,15 @@ function statsLongest() {
 
 function statsShortest() {
     if (myLibrary.length > 0) {
-        myLibrary.sort(function (a, b) {
+        sorted = JSON.parse(JSON.stringify(myLibrary))
+        sorted.sort(function (a, b) {
             if (parseInt(a.pages) > parseInt(b.pages)) {
                 return 1;
             } else {
                 return -1
             }
         })
-        document.getElementById("shortest-book").lastChild.textContent = myLibrary[0].title
+        document.getElementById("shortest-book").lastChild.textContent = sorted[0].title
     } else {
         document.getElementById("shortest-book").lastChild.textContent = "There are no books in your library"
     }
