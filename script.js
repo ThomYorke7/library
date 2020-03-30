@@ -1,33 +1,33 @@
-// Global Variables
-let myLibrary = [];
+// General Variables
+const myLibrary = [];
 let bookID = 0;
-let table = document.getElementById("library-table")
+const table = document.getElementById("library-table")
 const bookForm = document.getElementById("book-form")
 
 
 // Book Constructor
-class book {
+class Book {
     constructor(title, author, pages, read) {
         this.title = title;
         this.author = author;
         this.pages = pages;
         this.read = read ? "Yes" : "No";
         this.bookID = bookID;
+        Book.addBookToLibrary(this)
+    }
+
+    static addBookToLibrary(book) {
+        myLibrary.push(book)
+        bookID += 1
     }
 }
 
 
-// Add Books to "Library" Array and Table
-function addBookToLibrary(...bookArgs) {
-    newBook = new book(...bookArgs);
-    myLibrary.push(newBook)
-    bookID += 1
-}
-
+// Adds Books to Table
 function addBooktoTable(book) {
     let newRow = document.createElement("tr");
     Object.keys(book).forEach(e => {
-        column = document.createElement("td");
+        let column = document.createElement("td");
         column.textContent = book[e];
         column.setAttribute("class", `${e}`)
         newRow.appendChild(column);
@@ -35,26 +35,24 @@ function addBooktoTable(book) {
     newRow.removeChild(newRow.lastElementChild);
     newRow.appendChild(addRemoveButton());
     table.appendChild(newRow);
+
+    function addRemoveButton() {
+        let removeButton = document.createElement("button");
+        removeButton.setAttribute("data-id", bookID);
+        removeButton.setAttribute("class", "removeButton");
+        let buttonContainer = document.createElement("td");
+        buttonContainer.appendChild(removeButton)
+        return buttonContainer;
+    }
 }
 
-function addRemoveButton() {
-    let removeButton = document.createElement("button");
-    removeButton.setAttribute("data-id", bookID);
-    removeButton.setAttribute("class", "removeButton");
-    let buttonContainer = document.createElement("td");
-    buttonContainer.appendChild(removeButton)
-    return buttonContainer;
-}
 
-
-// This should render pre-existing libraries
-function render() {
+// This should render pre-existing libraries, but they don't exist at the moment
+(function render() {
     myLibrary.forEach(e => {
         addBooktoTable(e)
     })
-}
-
-render();
+})()
 
 
 // Removes the "Empty Library" message when adding a book
@@ -68,115 +66,106 @@ function removeEmptyMessage() {
 
 
 // The following functions are related to the Statistics section of the website
-function statsTotal() {
-    document.getElementById("total-books").lastChild.textContent = myLibrary.length;
-}
+function stats() {
+    (function statsTotal() {
+        document.getElementById("total-books").lastChild.textContent = myLibrary.length;
+    })();
 
-function statsRead() {
-    let booksRead = 0
-    if (myLibrary.length > 0) {
-        for (element of myLibrary) {
-            if (element.read == "Yes") {
-                booksRead++
+    (function statsRead() {
+        let booksRead = 0
+        if (myLibrary.length > 0) {
+            for (element of myLibrary) {
+                if (element.read == "Yes") {
+                    booksRead++
+                }
             }
+            document.getElementById("read-books").lastChild.textContent = `${Math.round(booksRead / myLibrary.length * 100)}% (${booksRead}/${myLibrary.length})`
+        } else {
+            document.getElementById("read-books").lastChild.textContent = 0
         }
-        document.getElementById("read-books").lastChild.textContent = `${Math.round(booksRead / myLibrary.length * 100)}% (${booksRead}/${myLibrary.length})`
-    } else {
-        document.getElementById("read-books").lastChild.textContent = 0
-    }
-}
+    })();
 
-function statsTotalPages() {
-    let totalPages = 0;
-    for (element of myLibrary) {
-        totalPages += parseInt(element.pages)
-    }
-    document.getElementById("total-pages").lastChild.textContent = totalPages
-}
-
-function statsPagesAverage() {
-    let totalPages = 0;
-    if (myLibrary.length > 0) {
+    (function statsTotalPages() {
+        let totalPages = 0;
         for (element of myLibrary) {
             totalPages += parseInt(element.pages)
         }
-        document.getElementById("average-pages").lastChild.textContent = Math.round(totalPages / myLibrary.length)
-    } else {
-        document.getElementById("average-pages").lastChild.textContent = 0
-    }
-}
+        document.getElementById("total-pages").lastChild.textContent = totalPages
+    })();
 
-function statsLongest() {
-    if (myLibrary.length > 0) {
-        sorted = JSON.parse(JSON.stringify(myLibrary))
-        sorted.sort(function (a, b) {
-            if (parseInt(a.pages) > parseInt(b.pages)) {
-                return -1;
-            } else {
-                return 1
+    (function statsPagesAverage() {
+        let totalPages = 0;
+        if (myLibrary.length > 0) {
+            for (element of myLibrary) {
+                totalPages += parseInt(element.pages)
             }
-        })
-        document.getElementById("longest-book").lastChild.textContent = sorted[0].title
-    } else {
-        document.getElementById("longest-book").lastChild.textContent = "There are no books in your library"
-    }
-}
+            document.getElementById("average-pages").lastChild.textContent = Math.round(totalPages / myLibrary.length)
+        } else {
+            document.getElementById("average-pages").lastChild.textContent = 0
+        }
+    })();
 
-function statsShortest() {
-    if (myLibrary.length > 0) {
-        sorted = JSON.parse(JSON.stringify(myLibrary))
-        sorted.sort(function (a, b) {
-            if (parseInt(a.pages) > parseInt(b.pages)) {
-                return 1;
-            } else {
-                return -1
+    (function statsLongest() {
+        if (myLibrary.length > 0) {
+            sorted = JSON.parse(JSON.stringify(myLibrary))
+            sorted.sort(function (a, b) {
+                if (parseInt(a.pages) > parseInt(b.pages)) {
+                    return -1;
+                } else {
+                    return 1
+                }
+            })
+            document.getElementById("longest-book").lastChild.textContent = sorted[0].title
+        } else {
+            document.getElementById("longest-book").lastChild.textContent = "There are no books in your library"
+        }
+    })();
+
+    (function statsShortest() {
+        if (myLibrary.length > 0) {
+            sorted = JSON.parse(JSON.stringify(myLibrary))
+            sorted.sort(function (a, b) {
+                if (parseInt(a.pages) > parseInt(b.pages)) {
+                    return 1;
+                } else {
+                    return -1
+                }
+            })
+            document.getElementById("shortest-book").lastChild.textContent = sorted[0].title
+        } else {
+            document.getElementById("shortest-book").lastChild.textContent = "There are no books in your library"
+        }
+    })();
+
+    (function statsTotalAuthors() {
+        let uniqueAuthors = [];
+        if (myLibrary.length > 0) {
+            let authors = [];
+            for (element of myLibrary) {
+                authors.push(element.author)
             }
-        })
-        document.getElementById("shortest-book").lastChild.textContent = sorted[0].title
-    } else {
-        document.getElementById("shortest-book").lastChild.textContent = "There are no books in your library"
-    }
-}
+            uniqueAuthors = [...new Set(authors)];
+        } document.getElementById("total-authors").lastChild.textContent = uniqueAuthors.length
+    })();
 
-function statsTotalAuthors() {
-    let uniqueAuthors = [];
-    if (myLibrary.length > 0) {
-        let authors = [];
-        for (element of myLibrary) {
-            authors.push(element.author)
+
+    (function statsPreferredAuthor() {
+        let authors = []
+        if (myLibrary.length > 0) {
+            for (element of myLibrary) {
+                authors.push(element.author)
+            }
+            let counts = authors.reduce((a, author) => {
+                a[author] = (a[author] || 0) + 1;
+                return a;
+            }, {});
+            let maxCount = Math.max(...Object.values(counts));
+            let mostFrequent = Object.keys(counts).filter(k => counts[k] === maxCount);
+            document.getElementById("preferred-author").lastChild.textContent = mostFrequent
+        } else {
+            document.getElementById("preferred-author").lastChild.textContent = "There are no books in your library"
         }
-        uniqueAuthors = [...new Set(authors)];
-    } document.getElementById("total-authors").lastChild.textContent = uniqueAuthors.length
-}
-
-
-function statsPreferredAuthor() {
-    let authors = []
-    if (myLibrary.length > 0) {
-        for (element of myLibrary) {
-            authors.push(element.author)
-        }
-        let counts = authors.reduce((a, author) => {
-            a[author] = (a[author] || 0) + 1;
-            return a;
-        }, {});
-        let maxCount = Math.max(...Object.values(counts));
-        let mostFrequent = Object.keys(counts).filter(k => counts[k] === maxCount);
-        document.getElementById("preferred-author").lastChild.textContent = mostFrequent
-    } else {
-        document.getElementById("preferred-author").lastChild.textContent = "There are no books in your library"
-    }
-}
-
-function stats() {
-    statsTotal();
-    statsRead();
-    statsTotalPages();
-    statsPagesAverage();
-    statsLongest();
-    statsShortest();
-    statsTotalAuthors();
-    statsPreferredAuthor();
+    })()
 }
 
 
@@ -227,18 +216,21 @@ bookForm.addEventListener("submit", (e) => {
     let pages = document.getElementById("book-pages").value
     let read = document.getElementById("book-read").checked
 
-    addBookToLibrary(title, author, pages, read);
+    let newBook = new Book(title, author, pages, read);
     bookForm.reset();
-    addBooktoTable(myLibrary[myLibrary.length - 1]);
+    addBooktoTable(newBook);
     removeEmptyMessage();
     stats();
-
 })
 
 table.addEventListener("click", (e) => {
     if (e.target.hasAttribute("data-id")) {
         let index = e.target.getAttribute("data-id");
-        myLibrary.splice(index - 1, 1);
+        for (let i = 0; i < myLibrary.length; i++) {
+            if (myLibrary[i].bookID === index - 1) {
+                myLibrary.splice(index - 1, 1)
+            }
+        }
         e.target.parentNode.parentNode.remove();
         removeEmptyMessage();
         stats();
